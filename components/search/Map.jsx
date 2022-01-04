@@ -25,7 +25,7 @@ export default function Map({ searchResults }) {
 		<MapWrapper>
 			<ReactMapGl
 				mapStyle="mapbox://styles/abubakarmana01/ckxzbjuvw0zy814l9866puaup"
-				mapboxApiAccessToken={process.env.MAPBOX_ACCESS_TOKEN}
+				mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
 				{...viewport}
 				onViewportChange={(viewport) => setViewport(viewport)}
 			>

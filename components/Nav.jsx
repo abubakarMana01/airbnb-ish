@@ -53,7 +53,6 @@ export default function Nav() {
 
 		setYOffset(window.scrollY);
 
-		console.log(router.route !== "/search");
 		if (router.route == "/") {
 			window.addEventListener("scroll", respondToScroll);
 		}
