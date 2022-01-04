@@ -13,7 +13,7 @@ export default function Search({ searchResults }) {
 	return (
 		<>
 			<Head>
-				<title>Airbnb-ish | Search</title>
+				<title>{router.query.location} | Stays | Airbnb-ish</title>
 				<link rel="icon" href="/images/airbnb-logo-small.svg" />
 			</Head>
 
