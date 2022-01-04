@@ -23,6 +23,16 @@ export default class MyDocument extends Document {
 		return (
 			<Html>
 				<Head>
+					<link rel="preconnect" href="https://fonts.googleapis.com"></link>
+					<link
+						rel="preconnect"
+						href="https://fonts.gstatic.com"
+						crossOrigin
+					></link>
+					<link
+						href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap"
+						rel="stylesheet"
+					></link>
 					{/* Step 5: Output the styles in the head  */}
 					{this.props.styleTags}
 				</Head>
