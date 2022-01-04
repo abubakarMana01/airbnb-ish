@@ -1,3 +1,7 @@
 module.exports = {
-  reactStrictMode: true,
-}
+	reactStrictMode: true,
+	images: {
+		domains: ["links.papareact.com"],
+		formats: ["image/avif", "image/webp"],
+	},
+};
