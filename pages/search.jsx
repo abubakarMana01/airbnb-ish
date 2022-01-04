@@ -4,8 +4,12 @@ import LocationCard from "../components/search/LocationCard";
 import Nav from "../components/Nav";
 import Head from "next/head";
 import Map from "../components/search/Map";
+import { useRouter } from "next/router";
+import { format } from "date-fns";
 
 export default function Search({ searchResults }) {
+	const router = useRouter();
+
 	return (
 		<>
 			<Head>
@@ -13,11 +17,20 @@ export default function Search({ searchResults }) {
 				<link rel="icon" href="/images/airbnb-logo-small.svg" />
 			</Head>
 
-			<Nav />
+			<Nav query={router.query} />
 
 			<Map searchResults={searchResults} />
 			<Wrapper>
 				<div>
+					<p>
+						{searchResults?.length}+ stays |{" "}
+						<span>
+							{`${format(new Date(router.query.startDate), "dd MMMM yy")} -
+							${format(new Date(router.query.endDate), "dd MMMM yy")}`}
+						</span>{" "}
+						for <span>{router.query.totalGuests} guests</span>
+					</p>
+					<h1>Stays in {router.query.location}</h1>
 					<Cards>
 						{searchResults.map((result) => (
 							<LocationCard key={Math.random()} data={result} />
@@ -46,6 +59,19 @@ const Wrapper = styled.div`
 		left: 0;
 		right: 0;
 		top: 0;
+
+		h1 {
+			margin-top: 0.5rem;
+			margin-bottom: 2rem;
+			font-size: clamp(1.4rem, 3vw, 2rem);
+			line-height: 1;
+		}
+
+		p {
+			span {
+				background-color: var(--gray);
+			}
+		}
 
 		@media (max-width: 550px) {
 			padding-inline: 1rem;

@@ -31,7 +31,8 @@ export default function LocationCard({ data }) {
 
 					<Pricing>
 						<span>
-							£30<small>/night</small>
+							{data.price.split(" ")[0]}
+							<small>/night</small>
 						</span>
 						<span className="total-price">{data.total}</span>
 					</Pricing>

@@ -5,8 +5,10 @@ import { BsGlobe, BsList } from "react-icons/bs";
 import LocationDetails from "./LocationDetails";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { format } from "date-fns";
+import Link from "next/link";
 
-export default function Nav() {
+export default function Nav({ query }) {
 	const router = useRouter();
 
 	const navRef = useRef(undefined);
@@ -19,11 +21,36 @@ export default function Nav() {
 	);
 	const [showSearchDetails, setShowSearchDetails] = useState(false);
 
+	const [startDate, setStartDate] = useState(new Date());
+	const [endDate, setEndDate] = useState(new Date());
+
+	const [adultsCounter, setAdultsCounter] = useState(0);
+	const [childrenCounter, setChildrenCounter] = useState(0);
+	const [totalGuests, setTotalGuests] = useState(
+		adultsCounter + childrenCounter
+	);
+
+	let placeholder;
+	if (query) {
+		const formattedStartDate = format(new Date(query?.startDate), "dd MMMM yy");
+		const formattedendDate = format(new Date(query?.endDate), "dd MMMM yy");
+		const range = `${formattedStartDate} - ${formattedendDate}`;
+		placeholder = `${query?.location} | ${range} | ${query?.totalGuests} guests`;
+	}
+
 	function handleSearch() {
-		if (location) {
-			router.push("/search");
-			setShowSearchDetails(false);
+		if (location && totalGuests) {
+			router.push({
+				pathname: "/search",
+				query: {
+					location,
+					totalGuests,
+					startDate: startDate.toISOString(),
+					endDate: endDate.toISOString(),
+				},
+			});
 		}
+		setShowSearchDetails(false);
 	}
 
 	function respondToScroll() {
@@ -63,15 +90,17 @@ export default function Nav() {
 		<NavContainer top={navIsAtTop} ref={navRef}>
 			<SectionWidth>
 				<LogoContainer top={navIsAtTop}>
-					<a href="#">
-						<Image
-							src="/images/airbnb-logo-small.svg"
-							width={35}
-							height={35}
-							alt="logo"
-						/>
-						<span>airbnb</span>
-					</a>
+					<Link href="/">
+						<a>
+							<Image
+								src="/images/airbnb-logo-small.svg"
+								width={35}
+								height={35}
+								alt="logo"
+							/>
+							<span>airbnb</span>
+						</a>
+					</Link>
 				</LogoContainer>
 
 				<SearchContainer top={navIsAtTop}>
@@ -80,7 +109,7 @@ export default function Nav() {
 						value={location}
 						onChange={(e) => setLocation(e.target.value)}
 						type="text"
-						placeholder="Where are you going?"
+						placeholder={placeholder || "Where are you going?"}
 					/>
 
 					<SearchIconContainer onClick={handleSearch} top={navIsAtTop}>
@@ -120,6 +149,16 @@ export default function Nav() {
 					location={location}
 					setLocation={setLocation}
 					setShowSearchDetails={setShowSearchDetails}
+					startDate={startDate}
+					endDate={endDate}
+					setStartDate={setStartDate}
+					setEndDate={setEndDate}
+					adultsCounter={adultsCounter}
+					setAdultsCounter={setAdultsCounter}
+					childrenCounter={childrenCounter}
+					setChildrenCounter={setChildrenCounter}
+					totalGuests={totalGuests}
+					setTotalGuests={setTotalGuests}
 				/>
 			)}
 		</NavContainer>

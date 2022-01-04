@@ -10,17 +10,18 @@ export default function LocationDetails({
 	setShowSearchDetails,
 	location,
 	setLocation,
+	startDate,
+	endDate,
+	setStartDate,
+	setEndDate,
+	adultsCounter,
+	setAdultsCounter,
+	childrenCounter,
+	setChildrenCounter,
+	totalGuests,
+	setTotalGuests,
 }) {
 	const router = useRouter();
-
-	const [startDate, setStartDate] = useState(new Date());
-	const [endDate, setEndDate] = useState(new Date());
-
-	const [adultsCounter, setAdultsCounter] = useState(0);
-	const [childrenCounter, setChildrenCounter] = useState(0);
-	const [totalGuests, setTotalGuests] = useState(
-		adultsCounter + childrenCounter
-	);
 
 	const handleSelect = (ranges) => {
 		setStartDate(ranges.selection.startDate);
@@ -28,7 +29,15 @@ export default function LocationDetails({
 	};
 
 	const handleSearch = () => {
-		router.push("/search");
+		router.push({
+			pathname: "/search",
+			query: {
+				location,
+				totalGuests,
+				startDate: startDate.toISOString(),
+				endDate: endDate.toISOString(),
+			},
+		});
 		setShowSearchDetails(false);
 	};
 
